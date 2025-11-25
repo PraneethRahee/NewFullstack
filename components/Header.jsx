@@ -1,6 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { SignedOut, SignedIn, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
+import { Button } from './ui/button'
 const Header = () => {
   return (
     <>
@@ -9,7 +11,17 @@ const Header = () => {
           <Link href="/" className='flex items-center'>
             <Image src="/logo.svg" alt="logo" width={500} height={500} className='h-11' priority/>
           </Link>
-          
+          <div className='flex items-center'>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+            <SignedOut>
+              <SignInButton mode='modal' >
+                <Button size="sm">Sign In</Button>
+              </SignInButton>  
+            </SignedOut>
+            
+          </div>
         </div>
 
       </nav>
