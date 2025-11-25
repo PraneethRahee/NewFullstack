@@ -24,7 +24,7 @@ const Header = () => {
             <Image src="/logo.svg" alt="logo" width={500} height={500} className='h-11' priority/>
           </Link>
           <div className='flex items-center'>
-            <Button variant={"ghost"} size="sm" onClick={setShowUpgradeModal}>Pricing</Button>
+            <Button variant={"ghost"} size="sm" onClick={()=>setShowUpgradeModal(true)}>Pricing</Button>
             <Button variant={"ghost"} size="sm" asChild className="mr-2">
               <Link href="explore">Explore</Link>
             </Button>
