@@ -1,9 +1,21 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { SignedOut, SignedIn, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
 import { Button } from './ui/button'
+import { Authenticated, Unauthenticated } from 'convex/react'
+import { BarLoader } from 'react-spinners'
+import { useStoreUserEffect } from '@/hooks/useStoreUserEffect'
+import { Building, Plus, Ticket } from 'lucide-react'
+
 const Header = () => {
+  
+  const { isLoading, isAuthenticated } = useStoreUserEffect();
+
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  
   return (
     <>
       <nav className='fixed top-0 left-0 right-0 z-20 bg-background/80 backdrop-blur-xl border-b '>
@@ -12,18 +24,37 @@ const Header = () => {
             <Image src="/logo.svg" alt="logo" width={500} height={500} className='h-11' priority/>
           </Link>
           <div className='flex items-center'>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-            <SignedOut>
+            <Button variant={"ghost"} size="sm" onClick={setShowUpgradeModal}>Pricing</Button>
+            <Button variant={"ghost"} size="sm" asChild className="mr-2">
+              <Link href="explore">Explore</Link>
+            </Button>
+
+            <Authenticated>
+              <Button size="sm" asChild className="flex gap-2 mr-4">
+                <Link href="/create-event">
+                  <Plus className='w-4 h-4'/>
+                  <span className='hidden sm:inline'>Create Event</span>
+                </Link>
+              </Button>
+
+              <UserButton>
+                <UserButton.MenuItems>
+                  <UserButton.Link label="My Tickets" href="/my-tickets" labelIcon={<Ticket size={16}/>}/>
+                  <UserButton.Link label="My Events" href="/my-events" labelIcon={<Building size={16}/>}/>
+                  <UserButton.Action label="manageAccount"/>
+                </UserButton.MenuItems>
+              </UserButton>
+            </Authenticated>
+            <Unauthenticated>
               <SignInButton mode='modal' >
                 <Button size="sm">Sign In</Button>
               </SignInButton>  
-            </SignedOut>
-            
+            </Unauthenticated>
           </div>
         </div>
-
+        {isLoading && (<div className='absolute bottom-0 left-0 w-full'>
+          <BarLoader width={"100%"} color='#fff' />
+        </div>)}
       </nav>
     </>
   )
