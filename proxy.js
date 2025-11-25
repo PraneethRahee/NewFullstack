@@ -1,6 +1,5 @@
-import { clerkMiddleware } from '@clerk/nextjs/server';
+import { clerkMiddleware,createRouteMatcher } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
-import { createRouteMatcher } from 'next-safe-action';
 
 const isProtectedRoute = createRouteMatcher([
   "/my-events(.*)",
