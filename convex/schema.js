@@ -18,6 +18,7 @@ export default defineSchema({
 
     interests: v.optional(v.array(v.string())),
     freeEventsCreated:v.number(),
+    hasPro: v.optional(v.boolean()),
     
     createdAt:v.number(),
     updatedAt:v.number(),
@@ -37,13 +38,14 @@ export default defineSchema({
 
     startDate:v.number(),
     endDate:v.number(),
-    time:v.string(),
+    timezone:v.string(),
 
     locationType:v.union(v.literal("physical"),v.literal("online")),
     venue:v.optional(v.string()),
     address:v.optional(v.string()),
-    city:v.optional(v.string()),
+    city:v.string(),
     state:v.optional(v.string()),
+    country:v.string(),
 
     capacity:v.number(),
     ticketType:v.union(v.literal("free"),v.literal("paid")),
@@ -52,6 +54,7 @@ export default defineSchema({
 
     coverImage:v.optional(v.string()),
     themeColor:v.optional(v.string()),
+
     createdAt:v.number(),
     updatedAt:v.number(),
   }).index("by_organizer",["organizerId"])
@@ -67,7 +70,7 @@ export default defineSchema({
     attendeeName:v.string(),
     attendeeEmail:v.string(),
 
-    qrcode:v.string(),
+    qrCode:v.string(),
 
     checkedIn:v.boolean(),
     checkedInAt:v.optional(v.number()),
@@ -78,5 +81,5 @@ export default defineSchema({
   }).index("by_event",["eventId"])
     .index("by_user",["userId"])
     .index("by_event_user",["eventId","userId"])
-    .index("by_qr_code",["qrcode"]),
+    .index("by_qr_code",["qrCode"]),
   })
